@@ -1,0 +1,30 @@
+    "/register": POST
+'msg':'注册异常','code':1
+'msg':'请填写相关信息','code':2
+'msg':'您已注册，无需重复注册','code':3
+'msg':'注册成功，请等待管理员审核','code':0
+
+    "/":  POST
+'msg':'账号不存在','code':4
+msg':'管理员审核中，请稍后','code':5
+'msg':'车牌识别失败','code':6
+'msg':'success','code':0
+
+    "/searchAll"： GET
+'msg':'无违规信息','code':7
+data':res,'msg':'success','code':0
+
+    "/searchByPlate" POST
+'msg':'none','code':8
+'data':res,'msg':'success','code':0
+
+"getImg/<imgAddress>":
+'msg':'fail','code':9
+
+
+"/changePlate": POST
+ 'msg':'success','code':0
+
+     "/delete":  POST
+ 'msg':'success','code':0
+ 'msg':'fail','code':10

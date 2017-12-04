@@ -6,22 +6,40 @@
 
 #### 微信端：
 
+    "/register": POST
+    Request:
+    {
+        "username":     //用户真实姓名
+        "openId":       //微信端的openId
+        "wx_name":      //微信名
+        "session_key":  //微信返回的session_key
+    }
+    Request:
+    {
+        "msg":          //返回的提示信息
+        "code":         //状态码
+    }
+
+
     "/":  POST
     Request:
     {
         "time":         //时间戳
         "address":      //地址
         "img":          //原始图片
-        "username":     //用户信息
+        "level"         //用户违规等级
+        "openId":       //
     }
     Response:
     {
-        "res":          //"fail" or "success"
+        "msg":          //返回的信息
+        "code"          //状态码
         "id":           //违规的id
         "time":         //时间戳
         "address":      //地址
         "img":          //图片的url地址
         "plate":        //车牌号
+        "level"         //违规等级
         "allcount":     //违规次数
         "count":        //待处理违规次数
     }
@@ -33,57 +51,85 @@
         "id":           //违规id
         "plate":        //车牌号
         "address":      //地点
+        "level":         //违规等级
+        "count":        //违规的次数
     }
     Response:
     {
-        "res":          //"fail" or "success"
+        "msg":          //返回的信息
+        "code"          //状态码
         "plate":        //车牌号
         "address":      //地址
     }
   
     "getImg/<imgAddress>":  GET (注意：<imgAddress>是图片的url地址)
     Response:
-    成功时直接返回图片,
-    失败时返回：
+
+    Response:
     {
-        "res":"fail"          
+        "msg":          //返回的信息
+        "code"          //状态码
+        "img"           //返回的图片
     }
 
 
     "/searchAll"： GET
     Response:
-    [
-        "res":          //"fail" or "success" or"none"
-        {
-            "id":       //违规的id
-            "time":     //时间戳
-            "address":  //地址
-            "img":      //图片的url地址
-            "plate":    //车牌号
-            "allcount": //总的违规次数
-            "count":    //待处理违规次数
-        },
-        {
-            "id":       //违规的id
-            "time":     //时间戳
-            "address":  //地址
-            "img":      //图片的url地址
-            "plate":    //车牌号
-            "allcount": //总的违规次数
-            "count":    //待处理违规次数
-        },
-        ...
-    ]
+    {
+        "msg":
+        "code":
+        "data": [{"plate":count},......]
+    }
 
 
-    "/search":  POST
+    "/search":  GET
     Request:
     {
-        "id":           //违规的id
+        "id":       //
     }
     Response:
     {
-        "res":          //"fail" or "success" or "none"
+        'msg':
+        'code':
+        "id":           //违规的id
+        "time":         //时间戳
+        "address":      //地址
+        "img":          //图片的url地址
+        "plate":        //车牌号
+        "count":        //待处理违规次数
+    }
+
+    "/searchByPlate" POST
+    Request:
+    {
+        "plate":
+    }
+    Response:
+    {
+        "msg":
+        "code":
+        "data":[{'id':,'time':,'address','img':,},......]
+    }
+
+#### 网页端：
+ "/searchAll"： GET
+    Response:
+    {
+        "msg":
+        "code":
+        "data": [{"plate":count},......]
+    }
+
+
+    "/search":  GET
+    Request:
+    {
+        "id":       //
+    }
+    Response:
+    {
+        'msg':
+        'code':
         "id":           //违规的id
         "time":         //时间戳
         "address":      //地址
@@ -92,34 +138,18 @@
         "allcount":     //总的违规次数
         "count":        //待处理违规次数
     }
-    
 
-#### 网页端：
-
-    "/searchAll"： GET
+    "/searchByPlate" POST
+    Request:
+    {
+        "plate":
+    }
     Response:
-    [
-        "res":          //"fail" or "success" or "none"
-        {
-            "id":       //违规的id
-            "time":     //时间戳
-            "address":  //地址
-            "img":      //图片的url地址
-            "plate":    //车牌号
-            "allcount": //总的违规次数
-            "count":    //待处理违规次数
-        },
-        {
-            "id":       //违规的id
-            "time":     //时间戳
-            "address":  //地址
-            "img":      //图片的url地址
-            "plate":    //车牌号
-            "allcount": //总的违规次数
-            "count":    //待处理违规次数
-        },
-        ...
-    ]
+    {
+        "msg":
+        "code":
+        "data":[{'id':,'time':,'address','img':,},......]
+    }
 
 
     "/search":  POST
@@ -129,7 +159,8 @@
     }
     Response:
     {
-        "res":          //"fail" or "success" or "none"
+        "msg":          //返回的信息
+        "code"          //状态码
         "id":           //违规的id
         "time":         //时间戳
         "address":      //地址
@@ -147,7 +178,8 @@
     }
     Response:
     {
-        "res":          //"fail" or "success"
+        "msg":          //返回的信息
+        "code"          //状态码
     }
     
 
