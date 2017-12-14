@@ -13,24 +13,13 @@ app = Flask(__name__)
 # CORS(app)
 # cors = CORS(app,resources={r"/*":{"origins":"http://localhost:63342"}})
 app.config['SECRET_KEY'] = 'helloworld'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:seansean@localhost:3306/car'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:seansean@localhost:3306/illegalPark'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 # locate = '/home/sean/PycharmProjects/car_connect/imge/'
-locate = '/root/car/car_connect/imge/'
-locate1 = '/root/car/car_connect/'
-class Parks(db.Model):
-    __tablename__ = 'parks'
-    id = db.Column(db.Integer,primary_key=True)
-    plate = db.Column(db.String(30))
-    img = db.Column(db.String(200))
-    address = db.Column(db.String(100))
-    level = db.Column(db.Integer)
-    time = db.Column(db.Integer)
-    uid = db.Column(db.Integer,db.ForeignKey('id'))
-    status = db.Column(db.Boolean) #是否被处理
-    extra = db.Column(db.String(100))
+locate = '/root/IllegalParkingHandler/imge/'
+locate1 = '/root/IllegalParkingHandler/'      #
 
 class Users(db.Model):
     __tablename__ = 'users'
@@ -42,6 +31,20 @@ class Users(db.Model):
     status = db.Column(db.Boolean)  #是否通过管理员审核
     level = db.Column(db.Integer)   #用户等级
     extra = db.Column(db.String(100))
+
+class Parks(db.Model):
+    __tablename__ = 'parks'
+    id = db.Column(db.Integer,primary_key=True)
+    plate = db.Column(db.String(30))
+    img = db.Column(db.String(200))
+    address = db.Column(db.String(100))
+    level = db.Column(db.Integer)
+    time = db.Column(db.Integer)
+    # uid = db.Column(db.Integer,db.ForeignKey('Users.id'))
+    status = db.Column(db.Boolean) #是否被处理
+    extra = db.Column(db.String(100))
+
+
 
 #通过注册之后将消息发送到小程序管理页面来审核
 @app.route('/register',methods=['POST'])
@@ -211,4 +214,5 @@ if __name__ == '__main__':
     db.create_all()
     from werkzeug.contrib.fixers import ProxyFix
     app.wsgi_app = ProxyFix(app.wsgi_app)
+    # app.run()
     app.run(debug=True,host = '0.0.0.0',port=80)
